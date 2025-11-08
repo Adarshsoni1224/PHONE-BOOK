@@ -39,16 +39,64 @@ def show_contact(x) :
     print("Phone : ",contact_split[2])
     print("====================")
 
-
 def show_all_contact():
     file=open("sample2.txt","r")
     Master_data=file.readlines()
     file.close()
     for i in Master_data :
         show_contact(i)
+
 #Update contact.
 def update_contact():
-    pass
+    file=open("sample2.txt","r")
+    #Master_data=file.read()
+    Master_data=file.readlines()
+    file.close()
+    #print(Master_data)
+    #print(type(Master_data))
+    search_term = input("Enter Search Term : ")
+    for k in Master_data :
+        if search_term in k : 
+            print(k)
+            current_contact = k
+            show_contact(k)
+            break  
+    else :
+        print("Contact Not Found")
+
+    print("Current Contact : ",current_contact)
+    current_contact2 = current_contact.replace("\n","")
+    current_contact_data = current_contact2.split(",")
+
+    print(current_contact_data)
+
+    choice2 = int(input("Enter 1 to change Name\nEnter 2 to change Email\nEnter 3 to change Contact\nEnter a Valid Choice :  "))
+    change_term = input("Enter Term : ")
+    if choice2 == 1 :
+        current_contact_data[0] = change_term
+    elif choice2 == 2 :
+        current_contact_data[1] = change_term
+    elif choice2 == 3 : 
+        current_contact_data[2] = change_term
+    else :
+        print("Invalid Choice")
+    print(current_contact_data)
+    print(Master_data)
+
+    updated_contact_entry = "{},{},{}\n".format(current_contact_data[0],current_contact_data[1],current_contact_data[2])
+    current_index = Master_data.index(current_contact)
+
+    Master_data[current_index] = updated_contact_entry
+
+    print(Master_data)
+
+    file = open("sample2.txt","w")
+    for i in Master_data :
+        file.write(i)
+    file.close()
+
+    print("Contact Updated Successfully")
+
 #Delete contact.
 def delete_contact():
     pass
