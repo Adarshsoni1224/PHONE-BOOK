@@ -92,7 +92,7 @@ def update_contact():
 
     print(Master_data)
 
-    file = open("sample2.txt","a")
+    file = open("sample2.txt","w")
     for i in Master_data :
         file.write(i)
     file.close()
@@ -107,14 +107,16 @@ def delete_contact():
 
     search_term = input("Enter Search Term to Delete: ")
     found = False
-
     for k in Master_data:
         if search_term in k:
             print("Contact Found:")
             show_contact(k)
+            print(Master_data)
             Master_data.remove(k)
+            print(Master_data)
             found = True
-        break 
+            
+            break 
     else :
         print("Contact Not Found")
 
@@ -122,8 +124,9 @@ def delete_contact():
     for i in Master_data:
         file.write(i)
     file.close()
-
     print("Contact Deleted Successfully!")
+
+
 choice2 = True
 while choice2 :
     choice=int(input("press 1 for add contact\npress 2 for search contact\npress 3 for show contact\npress 4 for update contact\npress 5 for delete contact\nenter a valid choice:"))
@@ -140,6 +143,6 @@ while choice2 :
     else:
         print("Invalid Choice")
 
-    next_choice = input("Enter y to continue and n to stop : ")
+    next_choice = input("Enter (y) or any key to continue and (n) to stop : ")
     if next_choice == "n"or next_choice == "N":
         choice2 = False
