@@ -5,6 +5,7 @@ def add_contact():
     email= input("Enter contact email:")
     phone= input("Enter contact phone:")
     contact_entry="{},{},{}\n".format(name,email,phone)
+    print("Contact added successfully")
     file=open("sample2.txt","a")
     file.write(contact_entry)
     file.close()
@@ -70,13 +71,13 @@ def update_contact():
 
     print(current_contact_data)
 
-    choice2 = int(input("Enter 1 to change Name\nEnter 2 to change Email\nEnter 3 to change Contact\nEnter a Valid Choice :  "))
+    choice1= int(input("Enter 1 to change Name\nEnter 2 to change Email\nEnter 3 to change Contact\nEnter a Valid Choice :  "))
     change_term = input("Enter Term : ")
-    if choice2 == 1 :
+    if choice1 == 1 :
         current_contact_data[0] = change_term
-    elif choice2 == 2 :
+    elif choice1 == 2 :
         current_contact_data[1] = change_term
-    elif choice2 == 3 : 
+    elif choice1 == 3 : 
         current_contact_data[2] = change_term
     else :
         print("Invalid Choice")
@@ -86,11 +87,12 @@ def update_contact():
     updated_contact_entry = "{},{},{}\n".format(current_contact_data[0],current_contact_data[1],current_contact_data[2])
     current_index = Master_data.index(current_contact)
 
+
     Master_data[current_index] = updated_contact_entry
 
     print(Master_data)
 
-    file = open("sample2.txt","w")
+    file = open("sample2.txt","a")
     for i in Master_data :
         file.write(i)
     file.close()
@@ -99,18 +101,45 @@ def update_contact():
 
 #Delete contact.
 def delete_contact():
-    pass
+    file = open("sample2.txt", "r")
+    Master_data = file.readlines()
+    file.close()
 
-choice=int(input("press 1 for add contact\npress 2 for search contact\npress 3 for show all contact\npress 4 for update contact\npress 5 for delete contact\nenter a valid choice:"))
-if choice == 1:
-    add_contact()
-elif choice == 2:
-    search_contact()
-elif choice == 3:
-    show_all_contact()
-elif choice == 4:
-    update_contact()
-elif choice == 5:
-    delete_contact()
-else:
-    print("Invalid Choice")
+    search_term = input("Enter Search Term to Delete: ")
+    found = False
+
+    for k in Master_data:
+        if search_term in k:
+            print("Contact Found:")
+            show_contact(k)
+            Master_data.remove(k)
+            found = True
+        break 
+    else :
+        print("Contact Not Found")
+
+    file = open("sample2.txt", "w")
+    for i in Master_data:
+        file.write(i)
+    file.close()
+
+    print("Contact Deleted Successfully!")
+choice2 = True
+while choice2 :
+    choice=int(input("press 1 for add contact\npress 2 for search contact\npress 3 for show contact\npress 4 for update contact\npress 5 for delete contact\nenter a valid choice:"))
+    if choice == 1:
+        add_contact()
+    elif choice == 2:
+        search_contact()
+    elif choice == 3:
+        show_all_contact()
+    elif choice == 4:
+        update_contact()
+    elif choice == 5:
+        delete_contact()
+    else:
+        print("Invalid Choice")
+
+    next_choice = input("Enter y to continue and n to stop : ")
+    if next_choice == "n"or next_choice == "N":
+        choice2 = False
